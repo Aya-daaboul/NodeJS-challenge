@@ -45,6 +45,10 @@ function onDataReceived(text) {
   else if(text.startsWith('help')){
       showHelp();
     }
+  else if(text.startsWith('add')){
+    text=text.slice(3).trim(add)
+    add(text);
+  }
   else{
     unknownCommand(text);
   }
@@ -93,6 +97,21 @@ function hello(e){
 function quit(){
   console.log('Quitting now, goodbye!')
   process.exit();
+}
+
+/**this function lists out all the tasks 
+ * it prints the tasks numbered
+ * 
+*/
+let list1=[];
+function add(item){
+  if(item===null){
+    console.log('no item added')
+  }
+  else{
+    list1.push(item)
+    console.log('item was added to the list')
+  }
 }
 
 // The following line starts the application
