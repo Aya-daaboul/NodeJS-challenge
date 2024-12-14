@@ -100,7 +100,9 @@ function showHelp()
   console.log('7 type in edit task to edit the last task')
   console.log('7 type in edit index task to edit the task at the specified index')
   console.log('note: if you type edit only there will be an error')
-  console.log('8 type in help to see all existing commands')
+  console.log('8 type in check index to check this task at the specified index')
+  console.log('9 type in uncheck index to check this task at the specified index')
+  console.log('10 type in help to see all existing commands')
 }
 
 
