@@ -34,12 +34,16 @@ function startApp(name){
  * @returns {void}
  */
 function onDataReceived(text) {
+  text=text.trim().toLowerCase()
   if (text === 'quit\n' || text==='exit\n') {
     quit();
   }
   else if(text === 'hello\n'){
     hello();
   }
+  else if(text==='help'){
+      showHelp();
+    }
   else{
     unknownCommand(text);
   }
@@ -55,6 +59,18 @@ function onDataReceived(text) {
  */
 function unknownCommand(c){
   console.log('unknown command: "'+c.trim()+'"')
+}
+
+/** this function prints all possible commands
+ * this function runs if the user inputs the word help
+ */
+function showHelp()
+{
+  console.log('The available commands are')
+  console.log('1 type in hello so we welcome you')
+  console.log('2 type in exit or quit to quit the application')
+  console.log('3 type in anything so the app prints it back')
+  console.log('4 type in help to see al existing commands')
 }
 
 
