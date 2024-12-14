@@ -49,6 +49,14 @@ function onDataReceived(text) {
     text=text.slice(3).trim(add)
     add(text);
   }
+  else if(text.startsWith('remove')){
+    text=text.slice(6).trim()
+    console.log("item rem is "+text)
+    remove(text);
+  }
+  else if(text.startsWith('print')){
+    printtasks();
+  }
   else{
     unknownCommand(text);
   }
@@ -104,14 +112,54 @@ function quit(){
  * 
 */
 let list1=[];
+list1[0]="do laundry";
+list1[1]="bake cookies";
+list1[2]="fry potato";
+
 function add(item){
   if(item===null){
     console.log('no item added')
+  }
+  else if(list1.includes(item)){
+    console.log("item already exists in the list");
   }
   else{
     list1.push(item)
     console.log('item was added to the list')
   }
+}
+/**
+ * This function removes 
+ * the specified item from the list
+ */
+/**function remove(item){
+  if(item in list1){
+  list1.pop(item);
+  console.log('item removed successfully')
+  }
+  else{
+    console.log("there's no such item in the list")
+  }
+
+}*/
+function remove(index) {
+
+  if(!index){
+   list1.pop();
+   console.log("last item was removed");
+  }
+  else if(index < list1.length){
+    list1.splice(index, 1);
+    console.log('Item removed successfully');
+  }
+  else{
+    console.log('index out of bound')
+  }
+}
+
+function printtasks(){
+  console.log(list1);
+
 }
 
 // The following line starts the application
