@@ -83,7 +83,10 @@ function showHelp()
   console.log('1 type in hello so we welcome you')
   console.log('2 type in exit or quit to quit the application')
   console.log('3 type in anything so the app prints it back')
-  console.log('4 type in help to see al existing commands')
+  console.log('4 type in add to add task to add this task to your list')
+  console.log('5 type in remove to remove last task in the list')
+  console.log('6 type in remove index to remove task at specified')
+  console.log('7 type in help to see all existing commands')
 }
 
 
