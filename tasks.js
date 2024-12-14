@@ -35,7 +35,6 @@ function startApp(name){
  */
 function onDataReceived(text) {
   text=text.trim().toLowerCase()
-  console.log("showing the text "+text)
   if (text === 'quit\n' || text==='exit\n') {
     quit();
   }
@@ -56,6 +55,10 @@ function onDataReceived(text) {
   }
   else if(text.startsWith('print')){
     printtasks();
+  }
+  else if(text.startsWith('edit')){
+    text=text.slice(4).trim()
+    edit(text);
   }
   else{
     unknownCommand(text);
@@ -86,7 +89,10 @@ function showHelp()
   console.log('4 type in add to add task to add this task to your list')
   console.log('5 type in remove to remove last task in the list')
   console.log('6 type in remove index to remove task at specified')
-  console.log('7 type in help to see all existing commands')
+  console.log('7 type in edit task to edit the last task')
+  console.log('7 type in edit index task to edit the task at the specified index')
+  console.log('note: if you type edit only there will be an error')
+  console.log('8 type in help to see all existing commands')
 }
 
 
@@ -156,13 +162,30 @@ function remove(index) {
     console.log('Item removed successfully');
   }
   else{
-    console.log('index out of bound')
+    console.log('index out of bound');
   }
+}
+
+function edit(text){
+  const index = parseInt(text);
+  if(!text){
+    console.log('error')
+  }
+  if(!index){
+    list1[list1.length-1]=text;
+  }
+  else if(index<list1.length){
+    list1[index]=text;
+  }
+  else{
+    console.log("index outof bound")
+
+  }
+  
 }
 
 function printtasks(){
   console.log(list1);
-
 }
 
 // The following line starts the application
