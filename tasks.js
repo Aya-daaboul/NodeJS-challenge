@@ -1,20 +1,75 @@
+const fs = require('fs');
+const path = require('path');
+
+// Default filename
+let fileName = process.argv[2] || 'database.json';
+
+// Load the data from the file when the app starts
+
+let list1 = [];  // Initialize list1 as an empty array
+list1[0] = "do laundry";
+list1[1] = "bake cookies";
+list1[2] = "fry potato";
+
+// Later in the code, load the data from the file
+list1 = loadData(fileName);
 
 /**
  * Starts the application
- * This is the function that is run when the app starts
- * 
- * It prints a welcome line, and then a line with "----",
- * then nothing.
- *  
  * @param  {string} name the name of the app
  * @returns {void}
  */
-function startApp(name){
+function startApp(name) {
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
-  console.log(`Welcome to ${name}'s application!`)
-  console.log("--------------------")
+  console.log(`Welcome to ${name}'s application!`);
+  console.log("--------------------");
+
+  // Save data on exit
+  process.on('exit', () => {
+    saveData(fileName);
+  });
+  process.on('SIGINT', () => {
+    saveData(fileName);
+    process.exit();
+  });
+}
+
+/**
+ * Loads the data from the specified JSON file
+ * @param {string} fileName the name of the file to load data from
+ * @returns {Array} the task list loaded from the file
+ */
+function loadData(fileName) {
+  try {
+    const filePath = path.resolve(fileName);
+    if (fs.existsSync(filePath)) {
+      const rawData = fs.readFileSync(filePath, 'utf8');
+      return JSON.parse(rawData);
+    } else {
+      console.log('No existing data found, starting with an empty task list.');
+      return [];
+    }
+  } catch (err) {
+    console.error('Error reading or parsing the file:', err);
+    return [];
+  }
+}
+
+/**
+ * Saves the current task list to the specified JSON file
+ * @param {string} fileName the name of the file to save data to
+ * @returns {void}
+ */
+function saveData(fileName) {
+  try {
+    const data = JSON.stringify({ tasks: list1 }, null, 2);
+    fs.writeFileSync(fileName, data, 'utf8');
+    console.log('Data saved to', fileName);
+  } catch (err) {
+    console.error('Error saving data:', err);
+  }
 }
 
 
@@ -35,7 +90,7 @@ function startApp(name){
  */
 function onDataReceived(text) {
   text=text.trim().toLowerCase()
-  if (text === 'quit\n' || text==='exit\n') {
+  if (text === 'quit' || text==='exit') {
     quit();
   }
   else if(text.startsWith('hello')){
@@ -130,10 +185,7 @@ function quit(){
  * it prints the tasks numbered
  * 
 */
-let list1=[];
-list1[0]="do laundry";
-list1[1]="bake cookies";
-list1[2]="fry potato";
+
 
 function add(item){
   if(item===null){
