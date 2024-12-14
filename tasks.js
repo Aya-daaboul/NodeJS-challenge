@@ -35,6 +35,7 @@ function startApp(name){
  */
 function onDataReceived(text) {
   text=text.trim().toLowerCase()
+  console.log("showing the text "+text)
   if (text === 'quit\n' || text==='exit\n') {
     quit();
   }
