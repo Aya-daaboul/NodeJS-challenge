@@ -60,6 +60,14 @@ function onDataReceived(text) {
     text=text.slice(4).trim()
     edit(text);
   }
+  else if(text.startsWith('check')){
+    text=text.slice(5).trim()
+    check(text);
+  }
+  else if(text.startsWith('uncheck')){
+    text=text.slice(7).trim()
+    uncheck(text);
+  }
   else{
     unknownCommand(text);
   }
@@ -182,6 +190,41 @@ function edit(text){
 
   }
   
+}
+
+function check(text){
+ const index = parseInt(text);
+
+ if(isNaN(index)){
+  console.log('error')
+ }
+ else if(index<list1.length){ //still got to figure a way to remove the index
+  list1[index] = list1[index] + " DONE"; 
+  console.log('checked this task')
+   
+ }
+ else{
+  console.log('index out of bound')
+
+ }
+}
+
+function uncheck(text){
+const index = parseInt(text);
+
+ if(isNaN(index)){
+  console.log('error')
+ }
+ else if(index<list1.length){ //still got to figure a way to remove the index
+  list1[index] = list1[index] + " NOT DONE YET"; 
+  console.log('unchecked this task')
+   
+ }
+ else{
+  console.log('index out of bound')
+
+ }
+
 }
 
 function printtasks(){
