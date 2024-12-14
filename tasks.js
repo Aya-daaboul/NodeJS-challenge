@@ -42,7 +42,7 @@ function onDataReceived(text) {
   else if(text.startsWith('hello')){
     hello(text);
   }
-  else if(text==='help'){
+  else if(text.startsWith('help')){
       showHelp();
     }
   else{
