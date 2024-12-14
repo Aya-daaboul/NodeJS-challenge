@@ -79,4 +79,4 @@ function quit(){
 }
 
 // The following line starts the application
-startApp("Aya Daaboul")
+startApp("Aya's app")
