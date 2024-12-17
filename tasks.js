@@ -1,15 +1,17 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs'); // the fs module is like your hands allows you to write and inetract
+const path = require('path'); // like your eyes they specify the path location of the notebook 
 
 // Default filename
-let fileName = process.argv[2] || 'database.json';
+let fileName = process.argv[2] || 'database.json'; //this is the file name it is database.json but if the user enters batata.json then it would be batata.json
 
-// Load the data from the file when the app starts
+//process.argv[0]: /path/to/node node
+//process.argv[1]: /path/to/tasks.js tasks.js
+//process.argv[2]: data.json
 
-let list1 = [];  // Initialize list1 as an empty array
+let list1 = [];  // Initialize list1 as an empty array, this is the page of the notebook
 
-// Later in the code, load the data from the file
-list1 = loadData(fileName);
+// load the data from the json file and put it in list 1
+list1 = loadData(fileName); 
 
 /**
  * Starts the application
@@ -27,6 +29,7 @@ function startApp(name) {
   process.on('exit', () => {
     saveData(fileName);
   });
+  // saves data when the user forecfully enetrs ctrl+c
   process.on('SIGINT', () => {
     saveData(fileName);
     process.exit();
@@ -38,30 +41,15 @@ function startApp(name) {
  * @param {string} fileName the name of the file to load data from
  * @returns {Array} the task list loaded from the file
  */
-/*function loadData(fileName) {
-  try {
-    const filePath = path.resolve(fileName);
-    if (fs.existsSync(filePath)) {
-      const rawData = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(rawData);
-    } else {
-      console.log('No existing data found, starting with an empty task list.');
-      return [];
-    }
-  } catch (err) {
-    console.error('Error reading or parsing the file:', err);
-    return [];
-  }
-}*/
 function loadData(fileName) {
-  try {
-    const filePath = path.resolve(fileName);
-    if (fs.existsSync(filePath)) {
-      const rawData = fs.readFileSync(filePath, 'utf8');
-      const parsedData = JSON.parse(rawData);
+  try { //try catch is to handle all possible errors while reading/writing data
+    const filePath = path.resolve(fileName); //find the page, path for the .json file
+    if (fs.existsSync(filePath)) { //if the page exists since if it doesn't there will be an error in writing the data into non-existing file
+      const rawData = fs.readFileSync(filePath, 'utf8'); // reads the content of the file
+      const parsedData = JSON.parse(rawData); //reads the data and coverts it into JS array and stringify does the opposite (json -> js)
 
-      // Ensure parsedData is an array
-      if (Array.isArray(parsedData)) {
+      // Ensure parsedData is an array for code robustness
+      if (Array.isArray(parsedData)) { // still got to figure out why ? and what ?
         return parsedData;
       } else if (parsedData && Array.isArray(parsedData.tasks)) {
         return parsedData.tasks; 
@@ -69,11 +57,11 @@ function loadData(fileName) {
         console.log('Data format invalid, starting with an empty task list.');
         return [];
       }
-    } else {
+    } else { //parsed data is invalid 
       console.log('No existing data found, starting with an empty task list.');
       return [];
     }
-  } catch (err) {
+  } catch (err) { // if an error occurred the list returned is empty and the error is shown aka printed
     console.error('Error reading or parsing the file:', err);
     return [];
   }
@@ -86,7 +74,7 @@ function loadData(fileName) {
  */
 function saveData(fileName) {
   try {
-    const data = JSON.stringify({ tasks: list1 }, null, 2);
+    const data = JSON.stringify({ tasks: list1 }, null, 2); // stringify converts the JS array into a JSON format
     fs.writeFileSync(fileName, data, 'utf8');
     console.log('Data saved to', fileName);
   } catch (err) {
