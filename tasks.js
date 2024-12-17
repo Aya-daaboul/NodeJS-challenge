@@ -7,9 +7,6 @@ let fileName = process.argv[2] || 'database.json';
 // Load the data from the file when the app starts
 
 let list1 = [];  // Initialize list1 as an empty array
-list1[0] = "do laundry";
-list1[1] = "bake cookies";
-list1[2] = "fry potato";
 
 // Later in the code, load the data from the file
 list1 = loadData(fileName);
@@ -41,12 +38,37 @@ function startApp(name) {
  * @param {string} fileName the name of the file to load data from
  * @returns {Array} the task list loaded from the file
  */
-function loadData(fileName) {
+/*function loadData(fileName) {
   try {
     const filePath = path.resolve(fileName);
     if (fs.existsSync(filePath)) {
       const rawData = fs.readFileSync(filePath, 'utf8');
       return JSON.parse(rawData);
+    } else {
+      console.log('No existing data found, starting with an empty task list.');
+      return [];
+    }
+  } catch (err) {
+    console.error('Error reading or parsing the file:', err);
+    return [];
+  }
+}*/
+function loadData(fileName) {
+  try {
+    const filePath = path.resolve(fileName);
+    if (fs.existsSync(filePath)) {
+      const rawData = fs.readFileSync(filePath, 'utf8');
+      const parsedData = JSON.parse(rawData);
+
+      // Ensure parsedData is an array
+      if (Array.isArray(parsedData)) {
+        return parsedData;
+      } else if (parsedData && Array.isArray(parsedData.tasks)) {
+        return parsedData.tasks; // Handle {"tasks": [...]}
+      } else {
+        console.log('Data format invalid, starting with an empty task list.');
+        return [];
+      }
     } else {
       console.log('No existing data found, starting with an empty task list.');
       return [];
