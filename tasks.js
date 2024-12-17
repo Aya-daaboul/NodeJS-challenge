@@ -64,7 +64,7 @@ function loadData(fileName) {
       if (Array.isArray(parsedData)) {
         return parsedData;
       } else if (parsedData && Array.isArray(parsedData.tasks)) {
-        return parsedData.tasks; // Handle {"tasks": [...]}
+        return parsedData.tasks; 
       } else {
         console.log('Data format invalid, starting with an empty task list.');
         return [];
